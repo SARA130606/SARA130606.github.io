@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sara's Vending</title>
+<meta name="description" content="Sara Patwardhan, a junior at Stony Brook studying Applied Math & Statistics and Information Systems. Data, AI and finance, and a habit of noticing patterns. Open to Summer 2027 internships.">
+<meta name="theme-color" content="#131118">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sara Patwardhan · Sara's Vending">
+<meta property="og:description" content="A junior at Stony Brook who loves working with data, especially the moment a pattern shows up that nobody expected. Open to Summer 2027 internships.">
+<meta property="og:image" content="https://sara130606.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='5' y='2' width='22' height='28' rx='2' fill='%23EFE7D6' stroke='%2315191F' stroke-width='2'/%3E%3Crect x='8' y='6' width='11' height='17' fill='%2315191F'/%3E%3Crect x='21' y='6' width='3' height='4' fill='%23E8A33D'/%3E%3Crect x='21' y='12' width='3' height='3' fill='%23D6452F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DotGothic16&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Pacifico&family=Unbounded:wght@700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-state="idle">
+<!--BODY-START-->
+<a class="skip-link" href="#resume">Skip the machine and read the résumé</a>
+<!-- ===== Fixed street backdrop: painted sky, skyline, store and wet pavement, with rain on top ===== -->
+<div class="backdrop" aria-hidden="true">
+  <canvas class="sky" id="sky"></canvas>
+  <div class="veil"></div>
+</div>
+<canvas class="rain" id="rain" aria-hidden="true"></canvas>
+
+<!-- ===== First screen: on wide screens the intro sits beside the machine; on phones they stack ===== -->
+<div class="hero" id="hero">
+<header class="topbar">
+  <span class="brand">Sara's Vending</span>
+  <nav class="topnav" id="topnav" aria-label="Profiles"></nav>
+</header>
+<section class="intro" id="street" aria-labelledby="intro-name">
+  <div class="intro-copy">
+    <p class="eyebrow">Seoul <span id="seoul-time">--:--</span> · machine online</p>
+    <h1 class="title" id="intro-name">Sara</h1>
+    <p class="tagline" id="intro-tagline"></p>
+    <ul class="facts" id="intro-facts"></ul>
+    <div class="intro-actions">
+      <button class="cta" id="enter-btn" type="button"><span class="when-narrow">Walk up to the machine</span><span class="when-wide">Read the résumé</span>
+        <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5"/></svg></button>
+    </div>
+    <nav class="quick" aria-label="Skip the machine">
+      <span class="quick-label">Or go straight to</span>
+      <span class="quick-links" id="quick-links"></span>
+    </nav>
+    <!-- whichever slot you point at on the machine; wide screens only -->
+    <div class="picked" id="picked">
+      <span class="picked-code" id="picked-code">B2</span>
+      <div class="picked-text">
+        <p class="picked-label" id="picked-label"></p>
+        <p class="picked-title" id="picked-title"></p>
+        <p class="picked-intro" id="picked-intro"></p>
+      </div>
+      <button class="picked-open" id="picked-open" type="button">Vend it
+        <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M8.5 3.5 13 8l-4.5 4.5"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== The vending machine, drawn in three-quarter view: front, left side and top ===== -->
+<main class="machine-section" id="machine-section">
+  <div class="sidewalk" aria-hidden="true"></div>
+  <div class="machine-stage">
+  <svg class="prop prop-plant" viewBox="0 0 160 220" aria-hidden="true">
+    <defs>
+      <linearGradient id="leafA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5f8a5a"/><stop offset=".55" stop-color="#3a5f40"/><stop offset="1" stop-color="#1f3527"/></linearGradient>
+      <linearGradient id="leafB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f9a66"/><stop offset="1" stop-color="#22392b"/></linearGradient>
+      <linearGradient id="potG" x1="0" x2="1"><stop offset="0" stop-color="#8a3324"/><stop offset=".35" stop-color="#c4553c"/><stop offset="1" stop-color="#6e2619"/></linearGradient>
+    </defs>
+    <g stroke="#15191f" stroke-width="2" stroke-linejoin="round">
+      <path class="stem" d="M80 160 C70 120 40 100 26 70" fill="none" stroke="#2c4a34" stroke-width="3"/>
+      <path class="stem" d="M82 160 C86 110 100 80 128 58" fill="none" stroke="#2c4a34" stroke-width="3"/>
+      <path class="stem" d="M80 160 C78 120 74 80 70 40" fill="none" stroke="#2c4a34" stroke-width="3"/>
+      <g class="leaf l1"><path d="M26 70 C2 64 -4 36 14 22 C26 12 46 16 52 30 C58 44 48 66 26 70Z" fill="url(#leafA)"/><path d="M26 70 C28 50 34 34 46 24 M18 40 L34 46 M14 30 L30 36 M22 54 L36 54" fill="none" stroke="#cfe0c4" stroke-width="1" opacity=".7"/></g>
+      <g class="leaf l2"><path d="M128 58 C150 50 160 24 144 10 C130 0 110 6 106 22 C102 38 110 56 128 58Z" fill="url(#leafB)"/><path d="M128 58 C124 40 120 26 112 16 M140 30 L124 36 M146 20 L130 24 M136 46 L122 46" fill="none" stroke="#cfe0c4" stroke-width="1" opacity=".7"/></g>
+      <g class="leaf l3"><path d="M70 40 C50 36 46 12 62 2 C74 -6 92 0 94 14 C96 28 86 42 70 40Z" fill="url(#leafA)"/><path d="M70 40 C72 26 76 14 84 6 M62 20 L76 24 M64 30 L78 32" fill="none" stroke="#cfe0c4" stroke-width="1" opacity=".7"/></g>
+      <g class="leaf l4"><path d="M58 128 C34 132 20 112 30 96 C40 82 60 90 66 104 C70 114 68 124 58 128Z" fill="url(#leafB)"/></g>
+      <g class="leaf l5"><path d="M100 120 C124 124 140 106 132 90 C124 76 104 82 98 96 C94 106 94 116 100 120Z" fill="url(#leafA)"/></g>
+      <path d="M44 156 H118 L110 216 H52Z" fill="url(#potG)"/>
+      <path d="M40 148 H122 V160 H40Z" fill="#d8cfbd"/>
+    </g>
+    <path d="M58 166 L62 210" stroke="#ffffff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+  <div class="machine-shadow" aria-hidden="true"></div>
+  <div class="machine" id="machine">
+    <div class="m-top" aria-hidden="true"></div>
+    <div class="m-side" aria-hidden="true">
+      <div class="side-sign"><span id="sign-ko">SNACKS</span></div>
+      <div class="side-vents"></div>
+    </div>
+    <div class="topsign" aria-hidden="true">
+      <span class="topsign-board"><span class="topsign-en" id="sign-en">SARA'S VENDING</span></span>
+      <span class="topsign-leg"></span><span class="topsign-leg"></span>
+    </div>
+    <div class="m-front">
+      <div class="nameplate" aria-hidden="true">
+        <span class="np-logo"></span>
+        <span class="np-text"><span class="np-en">Midnight CVS</span><span class="np-ko">Cold drinks · snacks</span></span>
+        <span class="np-hours">OPEN<br>24H</span>
+      </div>
+      <div class="machine-body">
+        <section class="glass" id="glass" aria-label="Products. Pick one to open that part of the portfolio.">
+          <div class="shelves" id="shelves"></div>
+          <div class="glare" aria-hidden="true"></div>
+        </section>
+        <aside class="panel" aria-label="Control panel">
+          <div class="readout" id="readout" role="status" aria-live="polite">
+            <span class="readout-main" id="readout-main">SELECT ITEM</span>
+            <span class="readout-sub" id="readout-sub">A1 – C3</span>
+          </div>
+          <div class="keypad" id="keypad" role="group" aria-label="Keypad">
+            <button class="key key-letter" type="button" data-key="A">A</button>
+            <button class="key key-letter" type="button" data-key="B">B</button>
+            <button class="key key-letter" type="button" data-key="C">C</button>
+            <button class="key" type="button" data-key="1">1</button>
+            <button class="key" type="button" data-key="2">2</button>
+            <button class="key" type="button" data-key="3">3</button>
+            <button class="key key-clear" type="button" data-key="CLR">Clear</button>
+          </div>
+          <button class="coin" id="coin-slot" type="button" aria-label="Insert a coin to leave a note in the guestbook">
+            <span class="slit" aria-hidden="true"><span class="coin-disc"></span></span>
+            <span class="coin-label">Insert coin<br><span class="coin-sub">to leave a note</span></span>
+          </button>
+          <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="true">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path class="spk" d="M2.5 6h2.5l3.5-3v10l-3.5-3H2.5z"/><path class="wave" d="M11 5.5a3.5 3.5 0 0 1 0 5"/><path class="mute" d="M11 6l3.5 4M14.5 6 11 10"/></svg>
+            <span id="sound-label">Sound on</span>
+          </button>
+        </aside>
+      </div>
+      <div class="tray" id="tray">
+        <button class="tray-chamber" id="tray-chamber" type="button" disabled aria-label="Dispenser tray is empty"></button>
+        <div class="tray-flap" id="tray-flap" aria-hidden="true"><span>PUSH</span></div>
+      </div>
+      <div class="kick" aria-hidden="true"><span class="kick-vent"></span><span class="serial">SV-2026 · 220V</span></div>
+    </div>
+  </div>
+  </div>
+</main>
+</div>
+
+<!-- ===== The résumé in one scroll, under the machine (built from content.js by app.js) ===== -->
+<div class="resume" id="resume" tabindex="-1" role="region" aria-labelledby="resume-title">
+  <nav class="resume-nav" id="resume-nav" aria-label="Sections"></nav>
+  <div class="resume-head">
+    <p class="mono">Everything on the shelves, unpacked</p>
+    <h2 id="resume-title">The résumé</h2>
+  </div>
+  <div class="resume-body" id="resume-body"></div>
+  <div class="resume-foot">
+    <a class="text-btn" href="#machine-section">Back up to the machine</a>
+  </div>
+</div>
+<noscript>
+  <div class="noscript">
+    <h2>Sara Patwardhan</h2>
+    <p>A junior at Stony Brook University studying Applied Math &amp; Statistics and Information Systems, Class of 2028. I love working with data and noticing patterns. Open to Summer 2027 internships.</p>
+    <p>Email: sarapatwardhan1306@gmail.com · <a href="https://www.linkedin.com/in/sara-patwardhan1306">LinkedIn</a> · <a href="https://github.com/SARA130606">GitHub</a></p>
+    <p>The vending machine needs JavaScript to run.</p>
+  </div>
+</noscript>
+
+<!-- ===== Focus: the item you just bought, up close ===== -->
+<div class="focus" id="focus" hidden role="dialog" aria-modal="true" aria-labelledby="focus-title">
+  <div class="focus-backdrop" id="focus-backdrop"></div>
+  <div class="focus-card">
+    <div class="focus-item" id="focus-item"></div>
+    <div class="focus-text">
+      <p class="focus-code" id="focus-code"></p>
+      <h2 class="focus-title" id="focus-title"></h2>
+      <p class="focus-hint" id="focus-hint"></p>
+      <div class="focus-actions">
+        <button class="cta" id="focus-open" type="button">Open it</button>
+        <button class="text-btn" id="focus-back" type="button">Put it back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+
+<!-- ===== Section pages ===== -->
+<section class="page" id="page" hidden tabindex="-1" aria-live="polite">
+  <div class="page-bar">
+    <button class="text-btn back-btn" id="return-btn" type="button">
+      <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7.5 3.5 3 8l4.5 4.5"/></svg>Back to the machine</button>
+  </div>
+  <div class="page-inner" id="page-inner"></div>
+</section>
+
+<!-- ===== Guestbook: a paper receipt ===== -->
+<div class="guestbook" id="guestbook" hidden role="dialog" aria-modal="true" aria-labelledby="gb-title">
+  <div class="gb-backdrop" id="gb-backdrop"></div>
+  <div class="gb-card">
+    <button class="gb-close text-btn" id="gb-close" type="button" aria-label="Close guestbook">Close</button>
+    <p class="gb-stub" id="gb-stub">COIN ACCEPTED · ₩500</p>
+    <h2 id="gb-title">Leave a note</h2>
+    <p class="gb-intro" id="gb-intro"></p>
+    <form class="gb-form" id="gb-form" novalidate>
+      <label for="gb-name">Your name</label>
+      <input id="gb-name" name="name" maxlength="60" autocomplete="name" required>
+      <label for="gb-msg">Message</label>
+      <textarea id="gb-msg" name="message" rows="3" maxlength="500" required></textarea>
+      <p class="gb-error" id="gb-error" role="alert"></p>
+      <button class="cta" type="submit">Pin my note</button>
+    </form>
+    <p class="gb-note" id="gb-note"></p>
+    <ul class="gb-list" id="gb-list"></ul>
+    <div class="gb-contact" id="gb-contact"></div>
+  </div>
+</div>
+<!-- ===== C3 sold out: a sticker-sized prompt to insert a coin ===== -->
+<div class="reserve" id="reserve" hidden role="dialog" aria-modal="true" aria-labelledby="rs-title">
+  <div class="gb-backdrop" id="rs-backdrop"></div>
+  <div class="rs-card">
+    <p class="gb-stub" id="rs-stub">C3 · SOLD OUT</p>
+    <h2 id="rs-title">Sold out</h2>
+    <p class="rs-text" id="rs-text"></p>
+    <div class="rs-actions">
+      <button class="cta rs-coin" id="rs-coin" type="button"><span class="rs-disc" aria-hidden="true">₩</span>Insert coin</button>
+      <button class="text-btn" id="rs-close" type="button">Not now</button>
+    </div>
+  </div>
+</div>
+<!--BODY-END-->
+<script src="js/content.js"></script>
+<script src="js/assets.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/openers.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
