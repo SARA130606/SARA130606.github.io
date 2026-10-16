@@ -44,11 +44,7 @@ window.SITE_CONTENT = {
     title: "About me",
     intro: "Hi, I'm Sara. I'm a junior at Stony Brook University, and I'm happiest when I'm working with data.",
     paragraphs: [
-      "Math has been part of my life for as long as I can remember. I finished school in Abu Dhabi with A-levels in Math, Further Math, Physics and Computer Science, and along the way I interned at the International Renewable Energy Agency and worked at COP28. Then I moved to New York, where I'm now double majoring in Applied Math & Statistics and Information Systems, with a minor in computer science.",
-      "The part I love isn't really the formulas, though. It's the patterns. I'm the person who notices the number that doesn't fit, or the one category that's somehow far bigger than it should be. That's exactly what happened at GoodWord: an old job was quietly dropping two thirds of all contacts into a single catch-all bucket. Once I fixed it, job-title coverage went from 30% to 84%.",
-      "Patterns are what my research is about, too. Benford's Law says that in a lot of real-world data, small leading digits show up far more often than big ones, so about 30% of numbers start with a 1. I tested whether Nifty-50 stock data follows that rule, and what it might mean for fraud detection when it doesn't.",
-      "Lately, a lot of my work has been with AI. I build LLM pipelines, and then I check them, because an answer that sounds right and an answer that is right aren't the same thing.",
-      "Right now I'm looking for a Summer 2027 internship in data, AI engineering or quantitative finance. If your team spends its days figuring out what the numbers are really saying, I'd love to hear from you."
+      "Math has been part of my life for as long as I can remember, but what I love most is the patterns: the number that doesn't fit, or the category that's somehow far bigger than it should be. After finishing school in Abu Dhabi, I came to Stony Brook to study Applied Math & Statistics and Information Systems. That habit of noticing things is how I caught an old job at GoodWord dropping two thirds of all contacts into one catch-all bucket, and fixing it took job-title coverage from 30% to 84%. These days I build AI pipelines and then check them, because an answer that sounds right isn't always right. I'm looking for a Summer 2027 internship in data, AI engineering or quantitative finance, and I'd love to hear from you."
     ],
     facts: [
       { k: "Based in", v: "Stony Brook, NY" },
